@@ -1,0 +1,86 @@
+line-length = 120
+indent-width = 4
+
+extend-exclude = [
+  "stubs",
+  "*pb2*",
+  ".git",
+  "__pycache__",
+  "build",
+  "dist",
+  "modules",
+  "__init__.py",
+  "*.ipynb"
+]
+
+# Настройки линтера
+[lint]
+# Какие группы правил включены (активны для проверки)
+select = [
+  "N",   # pep8-naming (соглашение по именованию)
+  "B",   # flake8-bugbear (потенциальные ошибки)
+  "A",   # flake8-builtins (конфликт с встроенными именами)
+  "E",   # pycodestyle (основные стили)
+  "W",   # pycodestyle (предупреждения)
+  "F",   # pyflakes (логические ошибки и неиспользуемый код)
+  "ASYNC", # flake8-async (проблемы с async/await)
+  "S",   # flake8-bandit (безопасность)
+  "D",   # pydocstyle (документация)
+  "I",   # isort (сортировка импортов)
+  "T20", # flake8-print (использование print)
+  "D400", # pydocstyle: Общее правило для Docstrings
+  "C", # complexity checks
+]
+
+# Список конкретных правил, которые следует игнорировать
+ignore = [
+  # ПРАВИЛА ДОКУМЕНТАЦИИ (pydocstyle)
+  "D100", # Missing docstring in public module - отсутствует docstring у модуля
+  "D101", # Missing docstring in public class - отсутствует docstring у публичного класса
+  "D102", # Missing docstring in public method - отсутствует docstring у публичного метода
+  "D103", # Missing docstring in public function - отсутствует docstring у публичной функции
+  "D104", # Missing docstring in public package - отсутствует docstring в __init__.py пакета
+  "D107", # Missing docstring in __init__ - отсутствует docstring у метода __init__
+  # "D212", # Multi-line docstring summary should start at the first line - конфликт с предпочитаемым стилем (D213)
+  # "D200", # One-line docstring should not be on two lines - разрешить разбивать длинные однострочные docstring
+
+  # ПРАВИЛА БЕЗОПАСНОСТИ (flake8-bandit)
+  "S101", # Use of `assert` detected - разрешить assert (часто нужно в тестах)
+  "S105", # Hardcoded password - возможные ложные срабатывания на не-пароли
+  "S106", # Possible hardcoded password assignment - жестко заданные пароли
+  "S311", # Using `random` module for secrets - использование random для паролей
+  "S602", # Check for method calls that initiate a subprocess with a shell - проверка на использование терминала из кода, убрать после переделки тестов на DbConcurrency
+
+  # СТИЛЬ (pycodestyle)
+  # "E501", # Line too long - Проверка длины строки
+  # "W293", # Blank line contains whitespace - пробелы в пустой строке
+
+  # СОВРЕМЕННЫЙ PYTHON (pyupgrade)
+  "UP007", # Use X | Y for union - не использовать, если нужна поддержка Python < 3.10
+
+  # Pytest Style (flake8-pytest-style)
+  "PT001", # pytest fixture Incorrectly named - имена фикстур не в snake_case
+
+  # СОГЛАШЕНИЕ ПО ИМЕНОВАНИЮ (pep8-naming)
+  # "N815", # MixedCase variable in class scope - смешанный стиль наименования
+  # "N803", # Argument name should be snake_case - аргумент в snake_case
+]
+fixable = ["ALL"]
+extend-safe-fixes = [
+  "D200", # Однострочный docstring не должен быть разбит на несколько строк
+  "D400", # Первая строка docstring должна заканчивалась точкой
+]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.flake8-builtins]
+builtins-ignorelist = ["id"]
+
+# Настройки форматирования
+[format]
+quote-style = "single" 
+indent-style = "space" 

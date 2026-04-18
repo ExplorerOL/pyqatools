@@ -1,0 +1,38 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.4
+    hooks:
+    # ---- COMMIT: только изменённые файлы ----
+      - id: ruff-check
+        name: ruff check (lint - changed files)
+        stages: [commit]
+        args: [--fix, --exit-non-zero-on-fix, --config=./ruff.toml]
+      - id: ruff-format
+        name: ruff format (format - changed files)
+        stages: [commit]
+        args: [--config=./ruff.toml]
+
+      # ---- PUSH: весь проект ----
+      - id: ruff-check
+        name: ruff check (lint - all files)
+        stages: [push]
+        args: [--fix, --exit-non-zero-on-fix, --config=./ruff.toml]
+        pass_filenames: false
+ 
+      - id: ruff-format
+        name: ruff format (format - all files)
+        stages: [push]
+        args: [--config=./ruff.toml]
+        pass_filenames: false
+
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-json
+      - id: name-tests-test
+        args: [--pytest-test-first]
